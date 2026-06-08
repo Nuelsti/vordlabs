@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -24,6 +25,36 @@ export const Route = createFileRoute("/contact")({
 
 function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    business: "",
+    message: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    const { error: dbError } = await supabase.from("contact_messages").insert({
+      name: form.name,
+      email: form.email,
+      business: form.business || null,
+      message: form.message,
+    });
+
+    setLoading(false);
+
+    if (dbError) {
+      setError(dbError.message);
+      return;
+    }
+
+    setSubmitted(true);
+  };
 
   return (
     <div className="bg-canvas text-ink min-h-screen">
@@ -70,19 +101,15 @@ function ContactPage() {
                 </p>
               </div>
             ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSubmitted(true);
-                }}
-                className="space-y-5"
-              >
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label className="text-xs font-semibold uppercase tracking-wider text-ink/50 mb-2 block">
                     Name
                   </label>
                   <input
                     required
+                    value={form.name}
+                    onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                     className="w-full bg-zinc-50 border border-ink/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
                     placeholder="Your name"
                   />
@@ -94,6 +121,8 @@ function ContactPage() {
                   <input
                     required
                     type="email"
+                    value={form.email}
+                    onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                     className="w-full bg-zinc-50 border border-ink/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
                     placeholder="you@business.com"
                   />
@@ -103,6 +132,8 @@ function ContactPage() {
                     Business
                   </label>
                   <input
+                    value={form.business}
+                    onChange={(e) => setForm((f) => ({ ...f, business: e.target.value }))}
                     className="w-full bg-zinc-50 border border-ink/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
                     placeholder="Business name"
                   />
@@ -113,15 +144,26 @@ function ContactPage() {
                   </label>
                   <textarea
                     rows={4}
+                    required
+                    value={form.message}
+                    onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
                     className="w-full bg-zinc-50 border border-ink/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30 resize-none"
                     placeholder="Tell us about your goals…"
                   />
                 </div>
+
+                {error && (
+                  <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">
+                    {error}
+                  </p>
+                )}
+
                 <button
                   type="submit"
-                  className="w-full bg-brand text-white text-sm font-medium py-3 rounded-xl ring-1 ring-brand hover:bg-brand/90 transition-colors"
+                  disabled={loading}
+                  className="w-full bg-brand text-white text-sm font-medium py-3 rounded-xl ring-1 ring-brand hover:bg-brand/90 transition-colors disabled:opacity-50"
                 >
-                  Send message
+                  {loading ? "Sending…" : "Send message"}
                 </button>
               </form>
             )}
@@ -132,3 +174,4 @@ function ContactPage() {
     </div>
   );
 }
+
