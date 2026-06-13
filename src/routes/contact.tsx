@@ -69,8 +69,8 @@ function ContactPage() {
               Let's get your business posting again.
             </h1>
             <p className="text-lg text-ink/60 mb-10">
-              Tell us a bit about your business and we'll set up your trial,
-              walk through the workflow, and answer any questions.
+              Tell us a bit about your business and we'll set up your trial, walk through the
+              workflow, and answer any questions.
             </p>
 
             <div className="space-y-4">
@@ -153,9 +153,7 @@ function ContactPage() {
                 </div>
 
                 {error && (
-                  <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">
-                    {error}
-                  </p>
+                  <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>
                 )}
 
                 <button
@@ -174,4 +172,3 @@ function ContactPage() {
     </div>
   );
 }
-

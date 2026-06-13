@@ -14,8 +14,7 @@ export const Route = createFileRoute("/about")({
       { property: "og:title", content: "About — Vordlabs" },
       {
         property: "og:description",
-        content:
-          "Our mission: help small businesses stay consistently visible online.",
+        content: "Our mission: help small businesses stay consistently visible online.",
       },
     ],
   }),
@@ -37,26 +36,26 @@ function AboutPage() {
 
           <div className="space-y-6 text-lg text-ink/70 leading-relaxed">
             <p>
-              Most small businesses don't fail at marketing because they lack
-              good ideas. They fail because doing it every day is genuinely
-              hard. There's always something more urgent than writing a
-              caption.
+              Most small businesses don't fail at marketing because they lack good ideas. They fail
+              because doing it every day is genuinely hard. There's always something more urgent
+              than writing a caption.
             </p>
             <p>
-              Vordlabs replaces the blank page with a structured plan. We
-              translate what makes your business unique into a content
-              calendar, then generate the posts and designs to execute it —
-              and ship them to your social channels through Buffer.
+              Vordlabs replaces the blank page with a structured plan. We translate what makes your
+              business unique into a content calendar, then generate the posts and designs to
+              execute it — and ship them to your social channels through Buffer.
             </p>
             <p>
-              The MVP focuses on a tight loop: <span className="text-ink font-medium">profile → calendar → content → design → publish</span>.
-              Performance analytics, a customer-interaction assistant, and
-              broader marketing automation are next on the roadmap.
+              The MVP focuses on a tight loop:{" "}
+              <span className="text-ink font-medium">
+                profile → calendar → content → design → publish
+              </span>
+              . Performance analytics, a customer-interaction assistant, and broader marketing
+              automation are next on the roadmap.
             </p>
             <p>
-              Built on React, Supabase, OpenAI, Pexels, and Buffer — chosen
-              because they keep the platform simple, scalable, and affordable
-              while delivering real business value.
+              Built on React, Supabase, OpenAI, Pexels, and Buffer — chosen because they keep the
+              platform simple, scalable, and affordable while delivering real business value.
             </p>
           </div>
 

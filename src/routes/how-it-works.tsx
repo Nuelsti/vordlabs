@@ -84,8 +84,7 @@ function HowItWorksPage() {
               Nine steps from sign-up to published.
             </h1>
             <p className="text-lg text-ink/60 text-pretty max-w-2xl">
-              You never interact with AI prompts. You fill simple forms.
-              Vordlabs handles the rest.
+              You never interact with AI prompts. You fill simple forms. Vordlabs handles the rest.
             </p>
           </div>
 

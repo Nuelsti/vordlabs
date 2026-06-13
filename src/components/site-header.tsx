@@ -3,22 +3,30 @@ import { Link } from "@tanstack/react-router";
 import { supabase } from "@/integrations/supabase/client";
 
 export function SiteHeader() {
-  const [user, setUser] = useState<{ id: string; email?: string } | null>(null);
+  const [user, setUser] = useState<{ id: string; username?: string } | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ? { id: session.user.id, email: session.user.email } : null);
+      setUser(
+        session?.user
+          ? { id: session.user.id, username: session.user.user_metadata?.username }
+          : null,
+      );
     });
 
     const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ? { id: session.user.id, email: session.user.email } : null);
+      setUser(
+        session?.user
+          ? { id: session.user.id, username: session.user.user_metadata?.username }
+          : null,
+      );
     });
 
-    const subscription = data?.subscription;
+    const subscription = data?.subscription as { unsubscribe?: () => void } | undefined;
 
     return () => {
-      if (subscription && typeof (subscription as any).unsubscribe === "function") {
-        (subscription as any).unsubscribe();
+      if (subscription && typeof subscription.unsubscribe === "function") {
+        subscription.unsubscribe();
       }
     };
   }, []);
@@ -69,7 +77,7 @@ export function SiteHeader() {
           {user ? (
             <>
               <span className="hidden sm:block text-sm text-ink/60 truncate max-w-[160px]">
-                {user.email}
+                {user.username}
               </span>
               <button
                 onClick={handleSignOut}

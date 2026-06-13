@@ -44,9 +44,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-canvas px-4">
       <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-ink">
-          This page didn't load
-        </h1>
+        <h1 className="text-xl font-semibold tracking-tight text-ink">This page didn't load</h1>
         <p className="mt-2 text-sm text-ink/60">
           Something went wrong on our end. You can try refreshing or head back home.
         </p>
@@ -87,8 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Vordlabs — AI Content Calendar for Small Businesses" },
       {
         property: "og:description",
-        content:
-          "AI-powered content planning, generation, and publishing for small businesses.",
+        content: "AI-powered content planning, generation, and publishing for small businesses.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

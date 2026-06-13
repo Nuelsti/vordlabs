@@ -63,18 +63,14 @@ function FeaturesPage() {
               Everything you need to stay consistent online.
             </h1>
             <p className="text-lg text-ink/60 text-pretty">
-              Vordlabs is built as a single workflow — from business profile,
-              to calendar, to generated posts and designs, to published
-              content.
+              Vordlabs is built as a single workflow — from business profile, to calendar, to
+              generated posts and designs, to published content.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {features.map((f) => (
-              <div
-                key={f.title}
-                className="bg-white rounded-3xl p-8 ring-1 ring-black/5"
-              >
+              <div key={f.title} className="bg-white rounded-3xl p-8 ring-1 ring-black/5">
                 <div className="size-9 rounded-full bg-brand-muted text-brand flex items-center justify-center mb-6 ring-1 ring-brand/10">
                   <span className="text-sm">✦</span>
                 </div>
@@ -86,12 +82,10 @@ function FeaturesPage() {
 
           <div className="mt-16 bg-zinc-50 rounded-3xl p-10 ring-1 ring-black/5 flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h3 className="text-xl font-medium mb-2">
-                Coming on the roadmap
-              </h3>
+              <h3 className="text-xl font-medium mb-2">Coming on the roadmap</h3>
               <p className="text-sm text-ink/60 max-w-xl">
-                Content performance analytics, a customer interaction
-                assistant, and advanced marketing automation are next.
+                Content performance analytics, a customer interaction assistant, and advanced
+                marketing automation are next.
               </p>
             </div>
             <Link

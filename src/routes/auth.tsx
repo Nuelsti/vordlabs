@@ -21,6 +21,7 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const navigate = useNavigate();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -35,11 +36,37 @@ function AuthPage() {
 
     try {
       if (mode === "signup") {
-        const { error: signUpError } = await supabase.auth.signUp({
+        if (!username.trim()) throw new Error("Please provide a username.");
+
+        const { data, error: signUpError } = await supabase.auth.signUp({
           email,
           password,
+          options: { data: { username: username.trim() } },
         });
+
         if (signUpError) throw signUpError;
+
+        const userId = data?.user?.id;
+        if (userId) {
+          try {
+            const { error: profileError } = await supabase
+              .from("profiles")
+              .upsert({ id: userId, full_name: username.trim() });
+            if (profileError) console.warn("profiles upsert failed:", profileError);
+          } catch (err) {
+            console.warn("profiles upsert error", err);
+          }
+        } else {
+          // If no user is returned (email confirmation flow), persist username locally
+          try {
+            if (typeof window !== "undefined") {
+              localStorage.setItem("pending_username", username.trim());
+            }
+          } catch (err) {
+            console.warn("could not save pending username", err);
+          }
+        }
+
         setMessage("Check your email to confirm your account.");
       } else {
         const { error: signInError } = await supabase.auth.signInWithPassword({
@@ -64,7 +91,6 @@ function AuthPage() {
     if (result.error) {
       setError(result.error instanceof Error ? result.error.message : "Google sign-in failed");
     }
-    // redirected = true means browser is navigating away
   };
 
   return (
@@ -114,9 +140,7 @@ function AuthPage() {
               <div className="w-full border-t border-ink/10" />
             </div>
             <div className="relative flex justify-center text-xs">
-              <span className="bg-canvas px-2 text-ink/40 uppercase tracking-wider">
-                or
-              </span>
+              <span className="bg-canvas px-2 text-ink/40 uppercase tracking-wider">or</span>
             </div>
           </div>
 
@@ -134,6 +158,23 @@ function AuthPage() {
                 placeholder="you@business.com"
               />
             </div>
+
+            {mode === "signup" && (
+              <div>
+                <label className="text-xs font-semibold uppercase tracking-wider text-ink/50 mb-2 block">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full bg-white border border-ink/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand/30"
+                  placeholder="your-username"
+                />
+              </div>
+            )}
+
             <div>
               <label className="text-xs font-semibold uppercase tracking-wider text-ink/50 mb-2 block">
                 Password
@@ -150,14 +191,10 @@ function AuthPage() {
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">
-                {error}
-              </p>
+              <p className="text-sm text-red-600 bg-red-50 rounded-lg px-3 py-2">{error}</p>
             )}
             {message && (
-              <p className="text-sm text-brand bg-brand-muted/30 rounded-lg px-3 py-2">
-                {message}
-              </p>
+              <p className="text-sm text-brand bg-brand-muted/30 rounded-lg px-3 py-2">{message}</p>
             )}
 
             <button
@@ -165,11 +202,7 @@ function AuthPage() {
               disabled={loading}
               className="w-full bg-brand text-white text-sm font-medium py-3 rounded-xl ring-1 ring-brand hover:bg-brand/90 transition-colors disabled:opacity-50"
             >
-              {loading
-                ? "Loading…"
-                : mode === "signin"
-                  ? "Sign in"
-                  : "Create account"}
+              {loading ? "Loading…" : mode === "signin" ? "Sign in" : "Create account"}
             </button>
           </form>
 

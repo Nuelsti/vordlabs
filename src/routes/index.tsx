@@ -14,8 +14,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Vordlabs — AI Content Calendar for Small Businesses" },
       {
         property: "og:description",
-        content:
-          "AI-powered content planning, generation, and publishing for small businesses.",
+        content: "AI-powered content planning, generation, and publishing for small businesses.",
       },
     ],
   }),
@@ -73,9 +72,8 @@ function Index() {
               <span className="italic font-display text-brand">without the grind.</span>
             </h1>
             <p className="text-lg md:text-xl text-ink/60 text-pretty max-w-[52ch] mx-auto mb-10">
-              Vordlabs plans your content calendar, generates the posts and
-              designs, and publishes them to your social channels — so your
-              business never goes quiet.
+              Vordlabs plans your content calendar, generates the posts and designs, and publishes
+              them to your social channels — so your business never goes quiet.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-16">
               <Link
@@ -190,13 +188,12 @@ function Index() {
               </h2>
               <div className="space-y-4 text-ink/60 text-pretty text-lg">
                 <p>
-                  You know you should post regularly. But between running the
-                  business, serving customers, and everything else — what to
-                  post and when keeps slipping.
+                  You know you should post regularly. But between running the business, serving
+                  customers, and everything else — what to post and when keeps slipping.
                 </p>
                 <p>
-                  Vordlabs replaces the blank page with a ready-made calendar
-                  built around your brand, your audience, and your goals.
+                  Vordlabs replaces the blank page with a ready-made calendar built around your
+                  brand, your audience, and your goals.
                 </p>
               </div>
             </div>
@@ -252,13 +249,10 @@ function Index() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
               <div className="md:col-span-8 bg-zinc-50 rounded-3xl p-8 ring-1 ring-black/5">
-                <h4 className="text-xl font-medium mb-3">
-                  A calendar built around your business
-                </h4>
+                <h4 className="text-xl font-medium mb-3">A calendar built around your business</h4>
                 <p className="text-ink/60 text-sm max-w-[52ch] mb-8">
-                  Vordlabs converts your business profile into structured
-                  prompts and asks OpenAI to produce a strategic content
-                  calendar — content pillars, post types, captions, and
+                  Vordlabs converts your business profile into structured prompts and asks OpenAI to
+                  produce a strategic content calendar — content pillars, post types, captions, and
                   cadence — all stored and ready to edit.
                 </p>
                 <div className="grid grid-cols-7 gap-1.5">
@@ -279,8 +273,8 @@ function Index() {
               <div className="md:col-span-4 bg-brand text-white rounded-3xl p-8 flex flex-col">
                 <h4 className="text-xl font-medium mb-3">One-click publishing</h4>
                 <p className="text-white/80 text-sm mb-8">
-                  Approve a post and hit publish. Buffer handles delivery to
-                  every connected social account.
+                  Approve a post and hit publish. Buffer handles delivery to every connected social
+                  account.
                 </p>
                 <div className="flex flex-col gap-2 mt-auto">
                   {["Instagram", "Facebook", "LinkedIn"].map((p) => (
@@ -301,23 +295,22 @@ function Index() {
               <div className="md:col-span-4 bg-white rounded-3xl p-8 ring-1 ring-black/5">
                 <h4 className="text-lg font-medium mb-3">Designs that look on-brand</h4>
                 <p className="text-ink/60 text-sm">
-                  Pick a template, drop in your logo and brand colors, and
-                  Vordlabs fills it with the right copy and imagery.
+                  Pick a template, drop in your logo and brand colors, and Vordlabs fills it with
+                  the right copy and imagery.
                 </p>
               </div>
               <div className="md:col-span-4 bg-white rounded-3xl p-8 ring-1 ring-black/5">
                 <h4 className="text-lg font-medium mb-3">No prompts, ever</h4>
                 <p className="text-ink/60 text-sm">
-                  You fill simple forms. We translate them into structured
-                  prompts behind the scenes. You stay in your business, not in
-                  AI tools.
+                  You fill simple forms. We translate them into structured prompts behind the
+                  scenes. You stay in your business, not in AI tools.
                 </p>
               </div>
               <div className="md:col-span-4 bg-white rounded-3xl p-8 ring-1 ring-black/5">
                 <h4 className="text-lg font-medium mb-3">Stock imagery, included</h4>
                 <p className="text-ink/60 text-sm">
-                  Supporting visuals come from Pexels and our template library
-                  — no separate subscription required.
+                  Supporting visuals come from Pexels and our template library — no separate
+                  subscription required.
                 </p>
               </div>
             </div>
@@ -332,10 +325,7 @@ function Index() {
             </p>
             <div className="flex flex-wrap justify-center items-center gap-x-14 gap-y-6 text-ink/50">
               {["OpenAI", "Buffer", "Pexels", "Supabase", "Meta"].map((p) => (
-                <span
-                  key={p}
-                  className="text-base font-semibold tracking-tight"
-                >
+                <span key={p} className="text-base font-semibold tracking-tight">
                   {p}
                 </span>
               ))}
@@ -395,8 +385,7 @@ function Index() {
               Stop disappearing from your customers' feeds.
             </h2>
             <p className="text-white/70 max-w-xl mx-auto mb-10">
-              Start your free trial and see your first month of content in
-              minutes.
+              Start your free trial and see your first month of content in minutes.
             </p>
             <Link
               to="/contact"

@@ -118,11 +118,7 @@ function PricingPage() {
                   </span>
                 </div>
                 <p
-                  className={
-                    p.featured
-                      ? "text-sm text-white/70 mb-8"
-                      : "text-sm text-ink/60 mb-8"
-                  }
+                  className={p.featured ? "text-sm text-white/70 mb-8" : "text-sm text-ink/60 mb-8"}
                 >
                   {p.desc}
                 </p>

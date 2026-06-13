@@ -13,11 +13,7 @@ export function useAuth() {
   useEffect(() => {
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(
-        session?.user
-          ? { id: session.user.id, email: session.user.email }
-          : null
-      );
+      setUser(session?.user ? { id: session.user.id, email: session.user.email } : null);
       setIsLoading(false);
     });
 
@@ -25,11 +21,7 @@ export function useAuth() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(
-        session?.user
-          ? { id: session.user.id, email: session.user.email }
-          : null
-      );
+      setUser(session?.user ? { id: session.user.id, email: session.user.email } : null);
       setIsLoading(false);
     });
 

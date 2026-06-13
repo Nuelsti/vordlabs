@@ -8,8 +8,8 @@ export function SiteFooter() {
           <div>
             <span className="font-semibold tracking-tight text-ink text-lg">Vordlabs</span>
             <p className="mt-4 text-sm text-ink/50 max-w-sm text-pretty">
-              AI-powered content planning and publishing — built so small
-              businesses can stay consistently visible online.
+              AI-powered content planning and publishing — built so small businesses can stay
+              consistently visible online.
             </p>
           </div>
           <div className="flex flex-wrap gap-16">
