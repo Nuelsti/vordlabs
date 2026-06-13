@@ -10,11 +10,17 @@ export function SiteHeader() {
       setUser(session?.user ? { id: session.user.id, email: session.user.email } : null);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ? { id: session.user.id, email: session.user.email } : null);
     });
 
-    return () => subscription.unsubscribe();
+    const subscription = data?.subscription;
+
+    return () => {
+      if (subscription && typeof (subscription as any).unsubscribe === "function") {
+        (subscription as any).unsubscribe();
+      }
+    };
   }, []);
 
   const handleSignOut = async () => {
