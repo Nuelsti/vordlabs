@@ -74,7 +74,7 @@ function AuthPage() {
           password,
         });
         if (signInError) throw signInError;
-        navigate({ to: "/" });
+        navigate({ to: "/dashboard" });
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -86,7 +86,7 @@ function AuthPage() {
   const handleGoogle = async () => {
     setError("");
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: window.location.origin,
+      redirect_uri: window.location.origin + "/dashboard",
     });
     if (result.error) {
       setError(result.error instanceof Error ? result.error.message : "Google sign-in failed");

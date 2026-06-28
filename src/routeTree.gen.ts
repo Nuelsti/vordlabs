@@ -13,10 +13,19 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
+import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
+import { Route as DashboardMyBrandRouteImport } from './routes/dashboard.my-brand'
+import { Route as DashboardIntegrationsRouteImport } from './routes/dashboard.integrations'
+import { Route as DashboardDesignsRouteImport } from './routes/dashboard.designs'
+import { Route as DashboardCreateContentRouteImport } from './routes/dashboard.create-content'
+import { Route as DashboardContentCalendarRouteImport } from './routes/dashboard.content-calendar'
+import { Route as DashboardAnalyticsRouteImport } from './routes/dashboard.analytics'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -36,6 +45,11 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -58,16 +72,66 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardMyBrandRoute = DashboardMyBrandRouteImport.update({
+  id: '/my-brand',
+  path: '/my-brand',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardIntegrationsRoute = DashboardIntegrationsRouteImport.update({
+  id: '/integrations',
+  path: '/integrations',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardDesignsRoute = DashboardDesignsRouteImport.update({
+  id: '/designs',
+  path: '/designs',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardCreateContentRoute = DashboardCreateContentRouteImport.update({
+  id: '/create-content',
+  path: '/create-content',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardContentCalendarRoute =
+  DashboardContentCalendarRouteImport.update({
+    id: '/content-calendar',
+    path: '/content-calendar',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardAnalyticsRoute = DashboardAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => DashboardRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/features': typeof FeaturesRoute
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/dashboard/analytics': typeof DashboardAnalyticsRoute
+  '/dashboard/content-calendar': typeof DashboardContentCalendarRoute
+  '/dashboard/create-content': typeof DashboardCreateContentRoute
+  '/dashboard/designs': typeof DashboardDesignsRoute
+  '/dashboard/integrations': typeof DashboardIntegrationsRoute
+  '/dashboard/my-brand': typeof DashboardMyBrandRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +142,14 @@ export interface FileRoutesByTo {
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/dashboard/analytics': typeof DashboardAnalyticsRoute
+  '/dashboard/content-calendar': typeof DashboardContentCalendarRoute
+  '/dashboard/create-content': typeof DashboardCreateContentRoute
+  '/dashboard/designs': typeof DashboardDesignsRoute
+  '/dashboard/integrations': typeof DashboardIntegrationsRoute
+  '/dashboard/my-brand': typeof DashboardMyBrandRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard': typeof DashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -85,10 +157,19 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/features': typeof FeaturesRoute
   '/how-it-works': typeof HowItWorksRoute
   '/pricing': typeof PricingRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/dashboard/analytics': typeof DashboardAnalyticsRoute
+  '/dashboard/content-calendar': typeof DashboardContentCalendarRoute
+  '/dashboard/create-content': typeof DashboardCreateContentRoute
+  '/dashboard/designs': typeof DashboardDesignsRoute
+  '/dashboard/integrations': typeof DashboardIntegrationsRoute
+  '/dashboard/my-brand': typeof DashboardMyBrandRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
+  '/dashboard/': typeof DashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -97,10 +178,19 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/contact'
+    | '/dashboard'
     | '/features'
     | '/how-it-works'
     | '/pricing'
     | '/sitemap.xml'
+    | '/dashboard/analytics'
+    | '/dashboard/content-calendar'
+    | '/dashboard/create-content'
+    | '/dashboard/designs'
+    | '/dashboard/integrations'
+    | '/dashboard/my-brand'
+    | '/dashboard/settings'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,16 +201,33 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/pricing'
     | '/sitemap.xml'
+    | '/dashboard/analytics'
+    | '/dashboard/content-calendar'
+    | '/dashboard/create-content'
+    | '/dashboard/designs'
+    | '/dashboard/integrations'
+    | '/dashboard/my-brand'
+    | '/dashboard/settings'
+    | '/dashboard'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/auth'
     | '/contact'
+    | '/dashboard'
     | '/features'
     | '/how-it-works'
     | '/pricing'
     | '/sitemap.xml'
+    | '/dashboard/analytics'
+    | '/dashboard/content-calendar'
+    | '/dashboard/create-content'
+    | '/dashboard/designs'
+    | '/dashboard/integrations'
+    | '/dashboard/my-brand'
+    | '/dashboard/settings'
+    | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -128,6 +235,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   FeaturesRoute: typeof FeaturesRoute
   HowItWorksRoute: typeof HowItWorksRoute
   PricingRoute: typeof PricingRoute
@@ -164,6 +272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FeaturesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -192,14 +307,97 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/my-brand': {
+      id: '/dashboard/my-brand'
+      path: '/my-brand'
+      fullPath: '/dashboard/my-brand'
+      preLoaderRoute: typeof DashboardMyBrandRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/integrations': {
+      id: '/dashboard/integrations'
+      path: '/integrations'
+      fullPath: '/dashboard/integrations'
+      preLoaderRoute: typeof DashboardIntegrationsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/designs': {
+      id: '/dashboard/designs'
+      path: '/designs'
+      fullPath: '/dashboard/designs'
+      preLoaderRoute: typeof DashboardDesignsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/create-content': {
+      id: '/dashboard/create-content'
+      path: '/create-content'
+      fullPath: '/dashboard/create-content'
+      preLoaderRoute: typeof DashboardCreateContentRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/content-calendar': {
+      id: '/dashboard/content-calendar'
+      path: '/content-calendar'
+      fullPath: '/dashboard/content-calendar'
+      preLoaderRoute: typeof DashboardContentCalendarRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/analytics': {
+      id: '/dashboard/analytics'
+      path: '/analytics'
+      fullPath: '/dashboard/analytics'
+      preLoaderRoute: typeof DashboardAnalyticsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
+
+interface DashboardRouteChildren {
+  DashboardAnalyticsRoute: typeof DashboardAnalyticsRoute
+  DashboardContentCalendarRoute: typeof DashboardContentCalendarRoute
+  DashboardCreateContentRoute: typeof DashboardCreateContentRoute
+  DashboardDesignsRoute: typeof DashboardDesignsRoute
+  DashboardIntegrationsRoute: typeof DashboardIntegrationsRoute
+  DashboardMyBrandRoute: typeof DashboardMyBrandRoute
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardAnalyticsRoute: DashboardAnalyticsRoute,
+  DashboardContentCalendarRoute: DashboardContentCalendarRoute,
+  DashboardCreateContentRoute: DashboardCreateContentRoute,
+  DashboardDesignsRoute: DashboardDesignsRoute,
+  DashboardIntegrationsRoute: DashboardIntegrationsRoute,
+  DashboardMyBrandRoute: DashboardMyBrandRoute,
+  DashboardSettingsRoute: DashboardSettingsRoute,
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   FeaturesRoute: FeaturesRoute,
   HowItWorksRoute: HowItWorksRoute,
   PricingRoute: PricingRoute,
