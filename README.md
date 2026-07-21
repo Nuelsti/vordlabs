@@ -1,213 +1,234 @@
-# Vordlabs
+# 🚀 Vordlabs
 
-A modern, scalable SaaS landing page and application built with TanStack Start, React, and Tailwind CSS. Features a content automation platform with AI-powered scheduling, multi-platform publishing, and smart content curation.
+[![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev/)
+[![TanStack Start](https://img.shields.io/badge/TanStack-Start-orange)](https://tanstack.com/start)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38BDF8?logo=tailwindcss)](https://tailwindcss.com/)
+[![Supabase](https://img.shields.io/badge/Supabase-Backend-3ECF8E?logo=supabase)](https://supabase.com/)
+[![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://vercel.com)
 
-## Features
+A modern AI-powered content automation platform built with **TanStack Start**, **React 19**, **Tailwind CSS**, and **Supabase**.
 
-- **AI-Powered Content Generation** — Create months of content in minutes
-- **Smart Scheduling** — Auto-optimised posting times across platforms
-- **Multi-Platform Publishing** — One click to publish everywhere
-- **Content Curation** — AI-suggested trending topics
-- **Analytics Dashboard** — Track engagement and growth
-- **User Authentication** — Secure signup/login with email/password and Google OAuth
-- **Contact Form** — Reach out to the team with message storage
+🌐 **Live Demo:** https://vordlabs.vercel.app/
 
-## Tech Stack
+---
 
-- **Framework:** [TanStack Start](https://tanstack.com/start) (React 19 + Vite 7)
-- **Styling:** Tailwind CSS v4 + shadcn/ui components
-- **State & Data:** TanStack Query + TanStack Router
-- **Backend:** Server functions via `createServerFn`
-- **Auth & Database:** Lovable Cloud (Supabase)
-- **Forms:** React Hook Form + Zod validation
-- **Icons:** Lucide React
+# ✨ Features
 
-## Prerequisites
+- 🤖 AI-powered content generation
+- 📅 Smart scheduling
+- 🌍 Multi-platform publishing
+- 🔥 AI content curation
+- 📊 Analytics dashboard
+- 🔐 Email & Google Authentication
+- 📩 Contact form with database storage
+- ⚡ Fast SSR using TanStack Start
 
-- **Node.js** 18+ or **Bun** 1.0+
-- A Lovable Cloud / Supabase project (for auth & database)
+---
 
-## Installation
+# 🛠 Tech Stack
 
-### 1. Clone the repository
+| Category | Technology |
+|-----------|------------|
+| Framework | TanStack Start |
+| Frontend | React 19 |
+| Build Tool | Vite 7 |
+| Styling | Tailwind CSS v4 + shadcn/ui |
+| Routing | TanStack Router |
+| Data Fetching | TanStack Query |
+| Backend | Server Functions |
+| Database | Supabase |
+| Authentication | Supabase Auth |
+| Validation | React Hook Form + Zod |
+| Icons | Lucide React |
+| Deployment | Vercel |
+
+---
+
+# 📦 Installation
+
+Clone the repository
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Nuelsti/vordlabs.git
 cd vordlabs
 ```
 
-### 2. Install dependencies
-
-Using **Bun** (recommended):
-
-```bash
-bun install
-```
-
-Or using **npm**:
+Install dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Configure environment variables
+---
 
-Create a `.env` file in the project root with the following variables:
+# ⚙️ Environment Variables
+
+Create a `.env` file.
 
 ```env
-# Supabase / Lovable Cloud
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_PUBLISHABLE_KEY=your-anon-key
-VITE_SUPABASE_PROJECT_ID=your-project-id
+VITE_SUPABASE_URL=
+VITE_SUPABASE_PUBLISHABLE_KEY=
+VITE_SUPABASE_PROJECT_ID=
 
-# Server-side (same values)
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_PUBLISHABLE_KEY=your-anon-key
-SUPABASE_PROJECT_ID=your-project-id
+SUPABASE_URL=
+SUPABASE_PUBLISHABLE_KEY=
+SUPABASE_PROJECT_ID=
 ```
 
-> Replace the placeholder values with your actual Supabase project credentials. You can find these in your Lovable Cloud / Supabase dashboard under **Project Settings > API**.
+---
 
-## Running the App
+# 🚀 Running Locally
 
-### Development server
-
-```bash
-bun dev
-```
-
-Or with npm:
+Development
 
 ```bash
 npm run dev
 ```
 
-The app will be available at `http://localhost:3000` (or the port shown in your terminal).
-
-### Build for production
-
-```bash
-bun run build
-```
-
-Or:
+Production Build
 
 ```bash
 npm run build
 ```
 
-### Preview production build
-
-```bash
-bun run preview
-```
-
-Or:
+Preview Production Build
 
 ```bash
 npm run preview
 ```
 
-### Lint & format
+Lint
 
 ```bash
-# Run ESLint
-bun run lint
-
-# Format with Prettier
-bun run format
+npm run lint
 ```
 
-## Project Structure
+Format
+
+```bash
+npm run format
+```
+
+---
+
+# 📁 Project Structure
 
 ```
-vordlabs/
-├── public/                  # Static assets (images, favicon, etc.)
+vordlabs
+│
+├── public/
 ├── src/
-│   ├── components/          # Reusable UI components (shadcn/ui + custom)
-│   ├── hooks/               # Custom React hooks (useAuth, etc.)
-│   ├── integrations/        # Third-party integrations
-│   │   ├── lovable/         # Lovable Cloud helpers
-│   │   └── supabase/        # Supabase client, auth middleware, types
-│   ├── lib/                 # Utility functions
-│   ├── routes/              # TanStack Start file-based routes
-│   │   ├── index.tsx        # Home / landing page
-│   │   ├── about.tsx        # About page
-│   │   ├── features.tsx     # Features page
-│   │   ├── how-it-works.tsx # How it works page
-│   │   ├── pricing.tsx      # Pricing page
-│   │   ├── contact.tsx      # Contact page
-│   │   ├── auth.tsx         # Authentication (login/signup)
-│   │   └── api/             # Server API routes
-│   ├── router.tsx           # TanStack Router configuration
-│   ├── server.ts            # Server entry configuration
-│   ├── start.ts             # Start instance with middleware
-│   ├── routeTree.gen.ts     # Auto-generated route tree
-│   └── styles.css           # Global styles + Tailwind CSS
+│   ├── components/
+│   ├── hooks/
+│   ├── integrations/
+│   ├── lib/
+│   ├── routes/
+│   ├── router.tsx
+│   ├── routeTree.gen.ts
+│   └── styles.css
+│
 ├── supabase/
-│   ├── migrations/            # Database migrations
-│   └── config.toml          # Supabase local config
-├── .env                     # Environment variables (not committed)
+│   ├── migrations/
+│   └── config.toml
+│
 ├── package.json
 ├── vite.config.ts
 ├── tsconfig.json
 └── README.md
 ```
 
-## Database Setup
+---
 
-This project uses Lovable Cloud (Supabase) with the following tables:
+# 🔐 Authentication
 
-- **`contact_messages`** — Stores messages from the contact form
-- **`user_roles`** — Stores user roles (admin, user) for access control
+Supports:
 
-Migrations are located in `supabase/migrations/`. To apply them:
+- Email & Password
+- Google OAuth
+- Protected routes
+- Session persistence
 
-1. Install the Supabase CLI
-2. Link your project: `supabase link --project-ref your-project-id`
-3. Push migrations: `supabase db push`
+Powered by **Supabase Auth**.
 
-## Authentication
+---
 
-The app supports:
+# 🗄 Database
 
-- **Email/Password** — Standard registration and login
-- **Google OAuth** — One-click sign-in with Google
+Current tables include:
 
-Auth pages are at `/auth`. Protected routes use the `requireSupabaseAuth` middleware.
+- `contact_messages`
+- `user_roles`
 
-## Available Scripts
+Database migrations are stored in:
 
-| Script | Description |
-|--------|-------------|
-| `dev` | Start the Vite development server |
-| `build` | Build for production |
-| `build:dev` | Build in development mode |
-| `preview` | Preview the production build locally |
-| `lint` | Run ESLint across the project |
-| `format` | Format all files with Prettier |
+```
+supabase/migrations
+```
 
-## Design Tokens
+---
 
-The project follows an **organic utility** design direction:
+# 📜 Available Scripts
 
-- **Primary brand:** Olive green (`#3f6212`)
-- **Background:** Warm canvas (`#fcfcf9`)
-- **Typography:** Instrument Sans + Instrument Serif (italic accents)
-- **Aesthetic:** Editorial desk planner — paper grain, soft botanical tones
+| Command | Description |
+|----------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build production application |
+| `npm run preview` | Preview production build |
+| `npm run lint` | Run ESLint |
+| `npm run format` | Format code using Prettier |
 
-## SEO
+---
 
-Each route has unique `head()` metadata (title, description, OG tags). The sitemap is auto-generated at `/sitemap.xml`.
+# 🚀 Deployment
 
-## Deployment
+The application is deployed on **Vercel**.
 
-This project is designed to deploy on platforms supporting TanStack Start / Vite SSR:
+Production URL
 
-- **Lovable** — One-click publish from the editor
-- **Vercel** — Add `adapter-vercel` configuration
-- **Cloudflare Pages** — Native Worker support via `nodejs_compat`
+https://vordlabs.vercel.app/
 
-## License
+For Vercel deployment:
 
-[MIT](LICENSE) — © Vordlabs
+- Framework Preset: **TanStack Start**
+- Build Command:
+
+```bash
+npm run build
+```
+
+- Install Command
+
+```bash
+npm install
+```
+
+No custom `vercel.json` configuration is required for the current deployment.
+
+---
+
+# 🎨 Design System
+
+- Olive Green Brand Palette
+- Warm Canvas Background
+- Instrument Sans
+- Instrument Serif
+- Editorial / Organic Design Language
+
+---
+
+# 📈 Future Improvements
+
+- AI-assisted content generation
+- Social media integrations
+- Analytics improvements
+- Team collaboration
+- Subscription billing
+- Admin dashboard
+
+---
+
+# 📄 License
+
+MIT License
+
+© 2026 Vordlabs
