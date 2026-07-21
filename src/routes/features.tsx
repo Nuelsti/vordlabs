@@ -5,13 +5,13 @@ import { SiteFooter } from "@/components/site-footer";
 export const Route = createFileRoute("/features")({
   head: () => ({
     meta: [
-      { title: "Features — Vordlabs" },
+      { title: "Features - Vordlabs" },
       {
         name: "description",
         content:
           "Explore Vordlabs' AI content calendar, post generation, on-brand design generation, and one-click Buffer publishing for small businesses.",
       },
-      { property: "og:title", content: "Features — Vordlabs" },
+      { property: "og:title", content: "Features - Vordlabs" },
       {
         property: "og:description",
         content:
