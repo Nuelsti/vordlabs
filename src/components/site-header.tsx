@@ -94,8 +94,8 @@ export function SiteHeader() {
               {/* but i want to keep it for desktop, the hidden takes it off from both mobile and desktop but that is not what i want, how do i fix that? */}
               <Link
                 to="/auth"
-              //   className=" rounded-full bg-brand px-4 py-2 text-sm font-medium text-white ring-1 ring-brand transition-colors hover:bg-brand/90"
-              // >
+                //   className=" rounded-full bg-brand px-4 py-2 text-sm font-medium text-white ring-1 ring-brand transition-colors hover:bg-brand/90"
+                // >
                 className="hidden text-sm rounded-full bg-brand px-4 py-2 font-medium text-white ring-1 ring-brand transition-colors hover:bg-brand/90 sm:block"
               >
                 Get Started
@@ -103,7 +103,7 @@ export function SiteHeader() {
             </>
           )}
 
-{/* Mobile menu button */}
+          {/* Mobile menu button */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
               <button className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/10 bg-white/70 text-ink/70 transition-colors hover:bg-white hover:text-ink md:hidden">
@@ -114,7 +114,11 @@ export function SiteHeader() {
             <SheetContent side="right" className="w-[85vw] max-w-sm p-0">
               <div className="flex h-full flex-col">
                 <div className="flex items-center justify-between border-b px-6 py-4">
-                  <Link to="/" className="font-semibold tracking-tight text-ink" onClick={closeMobileMenu}>
+                  <Link
+                    to="/"
+                    className="font-semibold tracking-tight text-ink"
+                    onClick={closeMobileMenu}
+                  >
                     Vordlabs
                   </Link>
                 </div>
@@ -126,12 +130,15 @@ export function SiteHeader() {
                       to={link.to}
                       onClick={closeMobileMenu}
                       className="rounded-lg px-3 py-2 text-sm font-medium text-ink/70 transition-colors hover:bg-ink/5 hover:text-ink"
-                      activeProps={{ className: "rounded-lg px-3 py-2 text-sm font-medium text-ink transition-colors" }}
+                      activeProps={{
+                        className:
+                          "rounded-lg px-3 py-2 text-sm font-medium text-ink transition-colors",
+                      }}
                     >
                       {link.label}
                     </Link>
                   ))}
-{/* inside hamburger */}
+                  {/* inside hamburger */}
                   <div className="mt-auto space-y-3 border-t pt-4">
                     {user ? (
                       <button

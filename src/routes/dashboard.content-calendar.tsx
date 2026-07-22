@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Calendar from "@/components/calendar/calendar";
+import CalendarStats from "@/components/calendar/calendarStats";
 
 export const Route = createFileRoute("/dashboard/content-calendar")({
   component: ContentCalendar,
@@ -7,73 +8,41 @@ export const Route = createFileRoute("/dashboard/content-calendar")({
 
 function ContentCalendar() {
   return (
-    <div className="w-full p-4 sm:p-6 lg:p-8 space-y-6">
+    <div className="min-h-screen bg-gray-50">
+      <div className="mx-auto max-w-[1800px] space-y-8 p-4 md:p-6 xl:p-8">
+        {/* Header */}
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+          <div>
+            <h1 className="text-3xl font-bold lg:text-4xl">Content Calendar</h1>
 
-      {/* Header */}
-      <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <p className="mt-2 text-gray-500">
+              Plan, review and manage all your content in one place.
+            </p>
+          </div>
 
-        {/* Title */}
-        <div>
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground">
-            Content Calendar
-          </h1>
+          <div className="flex flex-wrap gap-3">
+            <button className="rounded-xl border bg-white px-5 py-3 font-medium shadow-sm hover:bg-gray-50">
+              Generate Week
+            </button>
 
-          <p className="mt-2 max-w-2xl text-sm sm:text-base text-muted-foreground">
-            Plan, organize and manage your AI-generated content calendar.
-            Generate weeks of content, review scheduled posts, and stay
-            consistent across all your connected social media platforms.
-          </p>
+            <button className="rounded-xl bg-brand px-5 py-3 font-medium text-white hover:bg-brand/90">
+              Generate Month
+            </button>
+
+            <button className="rounded-xl border bg-white px-5 py-3 font-medium shadow-sm hover:bg-gray-50">
+              More
+            </button>
+          </div>
         </div>
 
-        {/* Generate Button */}
-        <button
-          className="
-            w-full
-            md:w-auto
-            rounded-xl
-            bg-brand
-            px-6
-            py-3
-            text-sm
-            font-semibold
-            text-white
-            shadow-sm
-            transition-all
-            hover:bg-brand/90
-            hover:shadow-md
-            active:scale-95
-          "
-        >
-          Generate Week
-        </button>
+        {/* Analytics */}
+        <CalendarStats />
 
-      </div>
-
-      {/* Calendar Container */}
-      <div
-        className="
-          rounded-2xl
-          border
-          bg-card
-          p-2
-          sm:p-4
-          lg:p-6
-          shadow-sm
-          overflow-hidden
-        "
-      >
-        <div
-          className="
-            h-[550px]
-            sm:h-[650px]
-            lg:h-[760px]
-            xl:h-[820px]
-          "
-        >
+        {/* Calendar */}
+        <div className="rounded-2xl border bg-white p-4 shadow-sm">
           <Calendar />
         </div>
       </div>
-
     </div>
   );
 }
