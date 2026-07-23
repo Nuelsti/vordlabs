@@ -1,4 +1,4 @@
-import StatsCard from "./StatsCard";
+import StatsCard from "./statsCard";
 
 import { CalendarDays, FileEdit, Send, BarChart3 } from "lucide-react";
 
