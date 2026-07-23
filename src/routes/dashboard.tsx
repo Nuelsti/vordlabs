@@ -55,9 +55,9 @@ useEffect(() => {
   const location = useLocation();
 
   return (
-    <div className="flex min-h-screen bg-gray-50 flex-col">
+    <div className="flex h-screen min-h-screen flex-col overflow-hidden bg-gray-50">
       {/* Top Navbar */}
-      <header className="flex h-16 items-center justify-between border-b bg-white px-6">
+      <header className="flex h-16 shrink-0 items-center justify-between border-b bg-white px-6">
         <div className="flex items-center gap-2">
 
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#3A943F] text-white font-bold">
