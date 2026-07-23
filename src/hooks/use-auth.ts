@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 export type User = {
   id: string;
   email: string | undefined;
+  name: string | undefined;
 } | null;
 
 export function useAuth() {
@@ -11,9 +12,24 @@ export function useAuth() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const getDisplayName = (
+      sessionUser: typeof supabase.auth.getUser extends () => infer T ? T : never,
+    ) => {
+      return undefined;
+    };
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ? { id: session.user.id, email: session.user.email } : null);
+      const sessionUser = session?.user;
+      const displayName =
+        sessionUser?.user_metadata?.full_name ||
+        sessionUser?.user_metadata?.name ||
+        sessionUser?.email?.split("@")[0] ||
+        undefined;
+
+      setUser(
+        sessionUser ? { id: sessionUser.id, email: sessionUser.email, name: displayName } : null,
+      );
       setIsLoading(false);
     });
 
@@ -21,7 +37,16 @@ export function useAuth() {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ? { id: session.user.id, email: session.user.email } : null);
+      const sessionUser = session?.user;
+      const displayName =
+        sessionUser?.user_metadata?.full_name ||
+        sessionUser?.user_metadata?.name ||
+        sessionUser?.email?.split("@")[0] ||
+        undefined;
+
+      setUser(
+        sessionUser ? { id: sessionUser.id, email: sessionUser.email, name: displayName } : null,
+      );
       setIsLoading(false);
     });
 
