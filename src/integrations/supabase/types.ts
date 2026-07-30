@@ -37,6 +37,7 @@ export type Database = {
       };
       profiles: {
         Row: {
+          brand_kit_data: Json | null;
           business_name: string | null;
           created_at: string;
           email: string | null;
@@ -45,6 +46,7 @@ export type Database = {
           updated_at: string;
         };
         Insert: {
+          brand_kit_data?: Json | null;
           business_name?: string | null;
           created_at?: string;
           email?: string | null;
@@ -53,6 +55,7 @@ export type Database = {
           updated_at?: string;
         };
         Update: {
+          brand_kit_data?: Json | null;
           business_name?: string | null;
           created_at?: string;
           email?: string | null;

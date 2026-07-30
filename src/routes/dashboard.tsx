@@ -16,7 +16,6 @@ import {
   Building2,
   LogOut,
 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,6 +44,7 @@ const navItems = [
 function DashboardLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
+  const [brandName, setBrandName] = useState<string | null>(null);
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -72,6 +72,25 @@ function DashboardLayout() {
       setAvatarSrc(savedAvatar);
     }
   }, []);
+
+  useEffect(() => {
+    if (!user?.id) {
+      setBrandName(null);
+      return;
+    }
+
+    const loadBrandName = async () => {
+      const { data, error } = await import("@/integrations/supabase/client").then(({ supabase }) =>
+        supabase.from("profiles").select("business_name").eq("id", user.id).maybeSingle(),
+      );
+
+      if (!error) {
+        setBrandName(data?.business_name ?? null);
+      }
+    };
+
+    void loadBrandName();
+  }, [user?.id]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -154,10 +173,6 @@ function DashboardLayout() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-2 rounded-lg px-2 py-1 text-left transition hover:bg-gray-100">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src={avatarSrc ?? undefined} />
-                  <AvatarFallback>{initials}</AvatarFallback>
-                </Avatar>
                 <div className="hidden text-left sm:block">
                   <p className="font-medium text-gray-700">{displayName}</p>
                   <p className="text-xs text-gray-500">{user?.email || "Signed in"}</p>
@@ -173,62 +188,21 @@ function DashboardLayout() {
               </div>
               <DropdownMenuSeparator />
               <div className="space-y-3 px-2 py-2">
-                <div className="flex items-center gap-3">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage src={avatarSrc ?? undefined} />
-                    <AvatarFallback>{initials}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <p className="text-sm font-medium text-gray-900">{displayName}</p>
-                    <p className="text-xs text-gray-500">Your avatar</p>
-                  </div>
-                </div>
-
-                <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 transition hover:bg-gray-50">
-                  <Upload className="h-4 w-4" />
-                  <span>Upload avatar</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleAvatarUpload}
-                  />
-                </label>
-
                 <div className="space-y-2">
                   <p className="text-xs font-medium uppercase tracking-wide text-gray-500">
-                    Choose a preset
+                    Brand logo
                   </p>
-                  <div className="flex flex-wrap gap-2">
-                    {presetAvatars.map((avatar) => (
-                      <button
-                        key={avatar.id}
-                        type="button"
-                        onClick={() => setAvatarSrc(avatar.src)}
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-sm font-semibold text-white transition hover:scale-105"
-                        style={{
-                          backgroundColor: avatar.src.includes("#2563eb")
-                            ? "#2563eb"
-                            : avatar.src.includes("#16a34a")
-                              ? "#16a34a"
-                              : avatar.src.includes("#7c3aed")
-                                ? "#7c3aed"
-                                : "#d97706",
-                        }}
-                      >
-                        {initials}
-                      </button>
-                    ))}
-                  </div>
+                  <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 transition hover:bg-gray-50">
+                    <Upload className="h-4 w-4" />
+                    <span>Upload logo</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleAvatarUpload}
+                    />
+                  </label>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => setAvatarSrc(null)}
-                  className="text-sm text-gray-600 transition hover:text-gray-900"
-                >
-                  Use initials only
-                </button>
               </div>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="flex cursor-pointer items-center gap-2">
@@ -326,11 +300,10 @@ function DashboardLayout() {
           <div className="border-t p-4">
             {/* <div className="flex items-center gap-3 cursor-pointer"> */}
             <div className={`flex items-center ${collapsed ? "justify-center" : "gap-3"}`}>
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand text-white font-medium">
-                SF
-              </div>
               <div className="flex-1 overflow-hidden">
-                <p className="truncate text-sm font-medium text-gray-900">Sarah's Fashion Store</p>
+                <p className="truncate text-sm font-medium text-gray-900">
+                  {brandName || ""}
+                </p>
                 <p className="text-xs text-gray-500">Owner</p>
               </div>
               <ChevronDown className="h-4 w-4 text-gray-500" />
