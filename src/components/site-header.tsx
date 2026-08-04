@@ -94,9 +94,7 @@ export function SiteHeader() {
               {/* but i want to keep it for desktop, the hidden takes it off from both mobile and desktop but that is not what i want, how do i fix that? */}
               <Link
                 to="/auth"
-                //   className=" rounded-full bg-brand px-4 py-2 text-sm font-medium text-white ring-1 ring-brand transition-colors hover:bg-brand/90"
-                // >
-                className="hidden text-sm rounded-full bg-brand px-4 py-2 font-medium text-white ring-1 ring-brand transition-colors hover:bg-brand/90 sm:block"
+                className="hidden text-sm rounded-full bg-brand px-4 py-2 font-medium text-white ring-1 ring-brand transition-colors hover:bg-brand/90 md:block"
               >
                 Get Started
               </Link>
@@ -159,7 +157,7 @@ export function SiteHeader() {
                         <Link
                           to="/auth"
                           onClick={closeMobileMenu}
-                          className="block rounded-lg bg-brand px-3 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-brand/90 sm:hidden"
+                          className="block rounded-lg bg-brand px-3 py-2 text-center text-sm font-medium text-white transition-colors hover:bg-brand/90 md:hidden"
                         >
                           Get Started
                         </Link>
