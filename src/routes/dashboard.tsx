@@ -154,9 +154,9 @@ function DashboardLayout() {
   };
 
   return (
-    <div className="flex h-screen min-h-screen flex-col overflow-hidden bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
       {/* Top Navbar */}
-      <header className="flex h-16 shrink-0 items-center justify-between border-b bg-white px-6">
+      <header className="fixed inset-x-0 top-0 z-20 flex h-16 items-center justify-between border-b bg-white px-6 shadow-sm">
         <div className="flex items-center gap-2">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#3A943F] text-white font-bold">
             V
@@ -231,12 +231,12 @@ function DashboardLayout() {
         </div>
       </header>
 
-      <div className="flex min-h-0 flex-1 overflow-hidden">
+      <div className="flex min-h-[calc(100vh-4rem)] overflow-hidden pt-16">
         {/* Sidebar */}
         <aside
           className={`
             ${collapsed ? "w-20" : "w-[260px]"}
-            flex shrink-0 flex-col overflow-y-auto border-r bg-white transition-all duration-300
+            fixed top-16 bottom-0 left-0 z-10 flex flex-col overflow-y-auto border-r bg-white transition-all duration-300
           `}
         >
           <div className="flex items-center justify-between p-4">
@@ -314,7 +314,7 @@ function DashboardLayout() {
         </aside>
 
         {/* Main Content Area */}
-        <main className="min-h-0 flex-1 overflow-y-auto p-8">
+        <main className={`${collapsed ? "ml-20" : "ml-[260px]"} min-h-[calc(100vh-4rem)] overflow-y-auto p-8`}> 
           <Outlet />
         </main>
       </div>
