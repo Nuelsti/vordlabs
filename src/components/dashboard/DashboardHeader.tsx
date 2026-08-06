@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/hooks/use-auth";
-import { supabase } from "@/integrations/supabase/client";
+import { BrandService } from "@/services/brand.service";
 
 export default function DashboardHeader() {
   const navigate = useNavigate();
@@ -18,14 +18,13 @@ export default function DashboardHeader() {
     }
 
     const loadBrandName = async () => {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("business_name")
-        .eq("id", user.id)
-        .maybeSingle();
-
-      if (!error) {
-        setBrandName(data?.business_name ?? null);
+      try {
+        const brands = await BrandService.getUserBrands();
+        if (brands.length > 0 && brands[0]) {
+          setBrandName(brands[0].name);
+        }
+      } catch (err) {
+        console.warn("Error loading user brands:", err);
       }
     };
 

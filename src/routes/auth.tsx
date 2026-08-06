@@ -51,7 +51,7 @@ function AuthPage() {
           try {
             const { error: profileError } = await supabase
               .from("profiles")
-              .upsert({ id: userId, full_name: username.trim() });
+              .upsert({ id: userId, email: email.trim(), full_name: username.trim() });
             if (profileError) console.warn("profiles upsert failed:", profileError);
           } catch (err) {
             console.warn("profiles upsert error", err);

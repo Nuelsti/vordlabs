@@ -80,12 +80,14 @@ function DashboardLayout() {
     }
 
     const loadBrandName = async () => {
-      const { data, error } = await import("@/integrations/supabase/client").then(({ supabase }) =>
-        supabase.from("profiles").select("business_name").eq("id", user.id).maybeSingle(),
-      );
-
-      if (!error) {
-        setBrandName(data?.business_name ?? null);
+      try {
+        const { BrandService } = await import("@/services/brand.service");
+        const brands = await BrandService.getUserBrands();
+        if (brands.length > 0 && brands[0]) {
+          setBrandName(brands[0].name);
+        }
+      } catch (err) {
+        console.warn("Could not fetch brand name:", err);
       }
     };
 

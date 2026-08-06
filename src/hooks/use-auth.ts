@@ -12,7 +12,7 @@ export function useAuth() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const getDisplayName = (sessionUser: typeof supabase.auth.getUser extends () => infer T ? T : never) => {
+    const getDisplayName = (sessionUser: { user_metadata?: Record<string, any>; email?: string } | null | undefined) => {
       return (
         sessionUser?.user_metadata?.username ||
         sessionUser?.user_metadata?.full_name ||

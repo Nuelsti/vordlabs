@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "
 import { Upload, Sparkles, ImageIcon, FileText } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { BrandService } from "@/services/brand.service";
 
 export const Route = createFileRoute("/dashboard/my-brand")({
   component: MyBrand,
@@ -51,19 +52,33 @@ function MyBrand() {
   useEffect(() => {
     if (!user?.id) return;
 
-    const loadProfile = async () => {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("business_name")
-        .eq("id", user.id)
-        .maybeSingle();
-
-      if (!error && data?.business_name) {
-        setBusinessName(data.business_name);
+    const loadUserBrands = async () => {
+      try {
+        const brands = await BrandService.getUserBrands();
+        if (brands.length > 0 && brands[0]) {
+          const firstBrand = brands[0];
+          setBusinessName(firstBrand.name);
+          const details = await BrandService.getBrandDetails(firstBrand.id);
+          if (details.guidelines) {
+            setFontPreference(details.guidelines.font_primary || "Playfair Display");
+            setColorPalette(
+              [details.guidelines.primary_color, details.guidelines.secondary_color, details.guidelines.accent_color]
+                .filter(Boolean)
+                .join(", ")
+            );
+            setPhotographyStyle(details.guidelines.photography_style || "");
+            setDesignGuidance(details.guidelines.design_guidance || "");
+          }
+          if (details.aiContext) {
+            setBrandBrief(details.aiContext.brand_brief || "");
+          }
+        }
+      } catch (err) {
+        console.warn("Could not load user brands:", err);
       }
     };
 
-    void loadProfile();
+    void loadUserBrands();
   }, [user?.id]);
 
   const fillSampleKit = () => {
@@ -127,42 +142,31 @@ function MyBrand() {
     setMessage("");
 
     try {
-      const sampleBrandKit = {
-        kitMode,
-        businessName: trimmedName,
-        brandBrief: kitMode === "sample" ? "Modern, elegant, premium fashion brand with a warm editorial feel and timeless storytelling." : brandBrief.trim(),
-        photographyStyle: kitMode === "sample" ? "Warm editorial fashion photography with soft natural light." : photographyStyle.trim(),
-        logoFileName: logoFile?.name ?? null,
-        fontPreference: kitMode === "sample" ? "Playfair Display" : fontPreference.trim(),
-        colorPalette: kitMode === "sample" ? "#1E3A2F, #D4A373, #F8F4EC" : colorPalette.trim(),
-        designGuidance: kitMode === "sample" ? "Keep layouts refined, premium, and minimal with a strong emphasis on storytelling and thoughtful spacing." : designGuidance.trim(),
-        productImageCount: productImages.length,
-        brandBookFileName: brandBookFile?.name ?? null,
-      };
+      const colors = (kitMode === "sample" ? "#1E3A2F, #D4A373, #F8F4EC" : colorPalette.trim()).split(",");
+      const primary_color = colors[0]?.trim() || "#3A943F";
+      const secondary_color = colors[1]?.trim() || "#1E3A2F";
+      const accent_color = colors[2]?.trim() || "#D4A373";
 
-      const brandKitData = {
-        kitMode,
-        businessName: trimmedName,
-        brandBrief: kitMode === "sample" ? "Modern, elegant, premium fashion brand with a warm editorial feel and timeless storytelling." : brandBrief.trim(),
-        photographyStyle: kitMode === "sample" ? "Warm editorial fashion photography with soft natural light." : photographyStyle.trim(),
-        logoFileName: logoFile?.name ?? null,
-        fontPreference: kitMode === "sample" ? "Playfair Display" : fontPreference.trim(),
-        colorPalette: kitMode === "sample" ? "#1E3A2F, #D4A373, #F8F4EC" : colorPalette.trim(),
-        designGuidance: kitMode === "sample" ? "Keep layouts refined, premium, and minimal with a strong emphasis on storytelling and thoughtful spacing." : designGuidance.trim(),
-        productImageCount: productImages.length,
-        brandBookFileName: brandBookFile?.name ?? null,
-      };
-
-      const { error: saveError } = await supabase.from("profiles").upsert({
-        id: user.id,
-        email: user.email ?? null,
-        full_name: user.name ?? null,
-        business_name: trimmedName,
-        brand_kit_data: brandKitData,
-        updated_at: new Date().toISOString(),
+      const brand = await BrandService.createBrand({
+        name: trimmedName,
+        logoFile: logoFile,
       });
 
-      if (saveError) throw saveError;
+      await BrandService.updateBrandSystem(
+        brand.id,
+        {
+          primary_color,
+          secondary_color,
+          accent_color,
+          font_primary: kitMode === "sample" ? "Playfair Display" : fontPreference.trim(),
+          photography_style: kitMode === "sample" ? "Warm editorial fashion photography with soft natural light." : photographyStyle.trim(),
+          design_guidance: kitMode === "sample" ? "Keep layouts refined, premium, and minimal with a strong emphasis on storytelling and thoughtful spacing." : designGuidance.trim(),
+        },
+        {
+          brand_brief: kitMode === "sample" ? "Modern, elegant, premium fashion brand with a warm editorial feel and timeless storytelling." : brandBrief.trim(),
+          tone_of_voice: kitMode === "sample" ? "Warm editorial, timeless storytelling" : photographyStyle.trim(),
+        }
+      );
 
       setMessage("Brand profile saved successfully.");
       navigate({ to: "/dashboard" });

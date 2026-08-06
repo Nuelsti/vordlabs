@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/use-auth";
+import { BrandService } from "@/services/brand.service";
 
 export function useUserActivity() {
   const { user } = useAuth();
@@ -17,17 +17,15 @@ export function useUserActivity() {
     let isMounted = true;
 
     const loadActivity = async () => {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("business_name")
-        .eq("id", user.id)
-        .maybeSingle();
-
-      if (!isMounted) return;
-
-      const hasActivity = Boolean(data?.business_name?.trim());
-      setHasLiveActivity(!error && hasActivity);
-      setIsLoading(false);
+      try {
+        const brands = await BrandService.getUserBrands();
+        if (!isMounted) return;
+        setHasLiveActivity(brands.length > 0);
+      } catch {
+        if (isMounted) setHasLiveActivity(false);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
     };
 
     void loadActivity();
